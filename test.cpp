@@ -26,7 +26,7 @@ int main()
     Skiplist<int> skiplist;
     while (true)
     {
-        cout << ">> ";
+        cout << "Enter int: ";
         cin >> choice;
         cin.ignore();
         if (choice == -1)
