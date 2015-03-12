@@ -40,8 +40,8 @@ public:
     Skiplist();
     ~Skiplist();
     void add(const E&);
-    //void remove(const E&);
-    //bool is_in(const E&);
+    void remove(const E&);
+    bool contains(const E&);
     void test_print();
 };
 

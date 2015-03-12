@@ -59,9 +59,6 @@ std::vector<Node<E>**> Skiplist<E>::search(const E &target)
 
     while (level >= 0)
     {   
-        //std::cout << "level=" << level << std::endl;
-        //std::cout << *ppCurrent << std::endl;
-        //std::cin.ignore();
         if (*ppCurrent && (*ppCurrent)->element < target)
         {
             // Move rightward
@@ -76,7 +73,7 @@ std::vector<Node<E>**> Skiplist<E>::search(const E &target)
         }
     }
 
-    return links; 
+    return links;
 }
 
 // Public functions
@@ -105,26 +102,37 @@ void Skiplist<E>::add(const E &newElement)
         ++index;
     }
 
-    /*
-    std::cout << "-inf: ";
-    for (unsigned i = 0; i < negativeInf.size(); ++i)
-    {
-        std::cout << negativeInf[i] << ' ';
-    }
-    std::cout << std::endl;
-    Node<E> *current = negativeInf[0];
-    while (current)
-    {
-        std::cout << current << ": ";
-        for (int i = 0; i < current->height; ++i)
-        {
-            std::cout << current->nextList[i] << ' ';
-        }
-        std::cout << std::endl;
-        current = current->nextList[0];
-    }*/
-
     ++size;
+}
+
+template <typename E>
+void Skiplist<E>::remove(const E &target)
+{
+    std::vector<Node<E>**> links = search(target);
+    Node<E> **ppPrevNode = links.back();
+    Node<E> *toDelete = *ppPrevNode;
+
+    if (toDelete == NULL || toDelete->element != target)
+    {
+        // TODO: raise exception; target not found
+        return;
+    }
+    
+    for (int i = 0; i < toDelete->height; ++i)
+    {
+        ppPrevNode = links.back();
+        links.pop_back();
+        *ppPrevNode = toDelete->nextList[i];
+    }
+
+    delete toDelete;
+
+    while (negativeInf.back() == NULL)
+    {
+        negativeInf.pop_back();
+    }
+
+    --size;
 }
 
 template <typename E>
@@ -154,6 +162,32 @@ void Skiplist<E>::test_print()
     for (unsigned int i = 0; i < negativeInf.size(); ++i)
         cout << "- ";
     cout << endl;
+}
+
+template <typename E>
+bool Skiplist<E>::contains(const E &target)
+{
+    int level = negativeInf.size() - 1;
+    Node<E> **ppCurrent = &negativeInf[level];
+
+    while (level >= 0)
+    {
+        if (*ppCurrent && (*ppCurrent)->element < target)
+        {
+            ppCurrent = &(*ppCurrent)->nextList[level];
+        }
+        else if (*ppCurrent && (*ppCurrent)->element == target)
+        {
+            return true;
+        }
+        else
+        {
+            --level;
+            --ppCurrent;
+        }
+    }
+
+    return false;
 }
 
 template class Skiplist<int>;
