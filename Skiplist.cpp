@@ -153,6 +153,21 @@ void Skiplist<E>::remove(const E &target)
 }
 
 template <typename E>
+std::vector<E> Skiplist<E>::elements()
+{
+    std::vector<E> elems;
+    Node<E> *current = negativeInf[0];
+
+    while (current)
+    {
+        elems.push_back(current->element);
+        current = current->nextList[0];
+    }
+
+    return elems;
+}
+
+template <typename E>
 void Skiplist<E>::test_print()
 {
     using namespace std;
