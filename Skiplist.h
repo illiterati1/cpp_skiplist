@@ -59,7 +59,7 @@ public:
     void add(const E&);
     void remove(const E&);
     bool contains(const E&);
-    std::vector<E> elements();
+    void elements(std::vector<E>&);
     void test_print();
 };
 
