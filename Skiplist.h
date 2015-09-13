@@ -56,10 +56,16 @@ private:
 public:
     Skiplist();
     ~Skiplist();
+
+    // Add an element to the list
     void add(const E&);
+    // Remove at element from the list
     void remove(const E&);
+    // Checks if the element is in the list
     bool contains(const E&);
+    // Appends the elements of the skiplist to the argument vector
     void elements(std::vector<E>&);
+    // The console printing function used by 'test'
     void test_print();
 };
 

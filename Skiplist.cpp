@@ -220,4 +220,6 @@ bool Skiplist<E>::contains(const E &target)
     return false;
 }
 
+// Instantiate your templates here. Skiplist<int> is included to make the test
+// program work.
 template class Skiplist<int>;
